@@ -1,0 +1,47 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django stuff:
+*.log
+db.sqlite3
+/media
+/staticfiles
+
+# pytest
+.cache
+.pytest_cache/
+
+# IDEs and editors
+.vscode/
+
+# env variables
+.env
+.env.*
+
+# logs
+logs/
+*.log
+
+# others
+*.DS_Store
