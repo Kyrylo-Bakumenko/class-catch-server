@@ -365,7 +365,3 @@ For any inquiries or feedback, please reach out to:
 - **Email:** kyrylo.bakumenko@gmail.com
 - **GitHub:** [@kyrylo-bakumenko](https://github.com/kyrylo-bakumenko)
 - **LinkedIn:** [Kyrylo Bakumenko](https://www.linkedin.com/in/kyrylo-bakumenko)
-
----
-
-© 2025 Class Catch. All rights reserved.
