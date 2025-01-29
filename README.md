@@ -27,7 +27,6 @@ Class Catch Backend is a robust and scalable web service built with Django and P
 - **Automated Scraping:** A rotating scraper using Proxy-v2 API to collect and update class data periodically.
 - **Task Scheduling:** CRON jobs established to automate scraping tasks, ensuring data freshness.
 - **Authentication & Authorization:** Secure API endpoints with token-based authentication.
-- **Comprehensive Documentation:** Detailed API documentation for easy integration with the frontend.
 
 ## Demo
 <!-- backend demo removed -->
@@ -40,10 +39,9 @@ Follow these instructions to set up the Class Catch Backend locally on your mach
 
 Ensure you have the following installed:
 
-- **Python 3.8 or later**
+- **Python 3.9 or later**
 - **pip** (Python package installer)
 - **PostgreSQL** (v12 or later)
-- **Git**
 
 ### Installation
 
@@ -118,7 +116,7 @@ Start the development server:
 python manage.py runserver
 ```
 
-The backend API will be accessible at [http://localhost:8000](http://localhost:8000).
+The backend API will be accessible at [https://classcatch.up.railway.app](https://classcatch.up.railway.app).
 
 ## API Documentation
 
