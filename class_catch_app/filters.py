@@ -194,9 +194,6 @@ class ClassFilter(filters.FilterSet):
         If 'allowed=COSC1,ENGS20', we interpret that as an OR:
         (class_code='COSC', course_number ~ some pattern matching '1','01','001', plus decimals)
         (class_code='ENGS', course_number='20', etc.)
-
-        We handle leading zeros for the integer part, and if there's a decimal part, we match it exactly.
-        E.g. 'COSC69.12' => prefix='COSC', num='69.12' => we match '^0*69(\.12)?$'
         """
         tokens = [t.strip() for t in value.split(",") if t.strip()]
         if not tokens:
@@ -236,7 +233,7 @@ class ClassFilter(filters.FilterSet):
             import re
 
             # escape the decimal_part
-            dec_esc = re.escape(decimal_part)  # e.g. ".12" => "\.12"
+            dec_esc = re.escape(decimal_part)
             if decimal_part:
                 pattern = f"^0*{re.escape(stripped_int)}{dec_esc}$"
             else:
