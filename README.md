@@ -149,7 +149,7 @@ When retrieving classes, you can apply the following filters:
 **Example Request:**
 
 ```http
-GET /api/classes/?department=Computer Science&course_level=200&instructor=Dr.%20Smith
+GET /api/classes?class_code=COSC&min_number=30&max_number=49)
 ```
 
 ## Technology Stack
@@ -227,71 +227,7 @@ To ensure that class data remains current, Class Catch Backend employs an automa
 
    **Note:** Replace `/path/to/your/venv/` and `/path/to/class-catch-backend/` with your actual paths.
 
-3. **Create a Custom Management Command:**
-
-   In `classes/management/commands/run_scraper.py`:
-
-   ```python
-   from django.core.management.base import BaseCommand
-   from classes.tasks import run_scraper_task
-
-   class Command(BaseCommand):
-       help = 'Runs the class scraper'
-
-       def handle(self, *args, **kwargs):
-           run_scraper_task()
-           self.stdout.write(self.style.SUCCESS('Successfully ran the scraper'))
-   ```
-
-4. **Implement Scraper Task:**
-
-   In `classes/tasks.py`:
-
-   ```python
-   from .scraper import scrape_classes
-
-   def run_scraper_task():
-       scrape_classes()
-   ```
-
-5. **Scraper Logic:**
-
-   In `scraper/scraper.py`:
-
-   ```python
-   import requests
-   from bs4 import BeautifulSoup
-   from scraper.proxy_manager import get_proxy
-   from classes.models import Class
-   from django.conf import settings
-
-   def scrape_classes():
-       proxy = get_proxy()
-       headers = {
-           'User-Agent': 'Your User Agent',
-       }
-       response = requests.get('https://external-class-source.com/classes', headers=headers, proxies=proxy)
-       
-       if response.status_code == 200:
-           soup = BeautifulSoup(response.text, 'html.parser')
-           # Parse the HTML to extract class data
-           classes = parse_class_data(soup)
-           for class_data in classes:
-               # Update or create class entries in the database
-               Class.objects.update_or_create(
-                   class_code=class_data['class_code'],
-                   defaults=class_data
-               )
-       else:
-           # Handle failed requests
-           pass
-
-   def parse_class_data(soup):
-       # Implement parsing logic based on the external source's structure
-       return []
-   ```
-
-6. **Proxy Management:**
+3. **Proxy Management:**
 
    In `scraper/proxy_manager.py`:
 
