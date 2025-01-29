@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django_cas_ng import views as cas_views
 from class_catch_app.views import cas_callback_view
+from django.shortcuts import redirect
 
 urlpatterns = [
+    path('', lambda request: redirect('/api/')),
     path('admin/', admin.site.urls),
     path('api/', include('class_catch_app.urls')),
     # cas
