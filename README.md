@@ -30,10 +30,7 @@ Class Catch Backend is a robust and scalable web service built with Django and P
 - **Comprehensive Documentation:** Detailed API documentation for easy integration with the frontend.
 
 ## Demo
-
-![Class Catch Backend Demo](https://via.placeholder.com/800x400) <!-- Replace with actual demo screenshots -->
-
-Explore the [live demo](https://your-backend-deployment-url.vercel.app) to see the backend APIs in action!
+<!-- backend demo removed -->
 
 ## Getting Started
 
