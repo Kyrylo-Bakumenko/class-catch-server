@@ -135,6 +135,19 @@ def register(request):
         {"detail": "User created successfully."},
         status=status.HTTP_201_CREATED
     )
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user(request):
+    """
+    Get the authenticated user's details.
+    """
+    user = request.user
+    return Response({
+        "id": user.id,
+        "username": user.username,
+        "email": user.email
+    })
 
 @login_required
 def cas_callback_view(request):
