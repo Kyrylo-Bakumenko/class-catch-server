@@ -18,8 +18,42 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.conf import settings
+from .models import Course
+from .serializers import CourseSerializer
 
 
+### API | NEW VIEW SET FOR COURSES ###
+class CourseViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Viewset for courses obtained via the Academic API.
+    
+    Filtering and searching have been updated for the new model:
+    - Filters available: subject_id, course_number, is_active.
+    - Search fields: name, subject_id, and course_number.
+    - A computed field 'term_code_effective' (extracted from course_id) is available,
+      but note that filtering by term will require a custom FilterSet if needed.
+    
+    Note: Some legacy fields (e.g. instructor, world_culture, period) are not available
+    on the new model.
+    """
+    queryset = Course.objects.all().order_by('subject_id', 'course_number')
+    serializer_class = CourseSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['subject_id', 'course_number', 'is_active']
+    search_fields = ['name', 'subject_id', 'course_number']
+
+    @action(detail=True, methods=['get'])
+    def enrollment_history(self, request, pk=None):
+        # Since the academic API does not provide enrollment history
+        # in the same way as the legacy scraper, and our new Course model
+        # does not track enrollments, we return a not-implemented message.
+        # Later, you might integrate with the enrollment API endpoint.
+        return Response(
+            {"detail": "Enrollment history for Course is not implemented."},
+            status=status.HTTP_501_NOT_IMPLEMENTED
+        )
+
+### DEPRECATE OLD SCRAPE VIEW ###
 class ClassViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Class.objects.all().order_by('class_code', 'course_number')
     serializer_class = ClassSerializer
@@ -149,21 +183,21 @@ def get_user(request):
         "email": user.email
     })
 
-@login_required
-def cas_callback_view(request):
-    """
-    CAS calls back here after a successful login. 
-    By now, request.user should be a valid Django user 
-    (auto-created if CAS_AUTO_CREATE_USER=True).
-    """
-    user = request.user
+# @login_required
+# def cas_callback_view(request):
+#     """
+#     CAS calls back here after a successful login. 
+#     By now, request.user should be a valid Django user 
+#     (auto-created if CAS_AUTO_CREATE_USER=True).
+#     """
+#     user = request.user
 
-    # get or create a DRF token for this user
-    token, _ = Token.objects.get_or_create(user=user)
+#     # get or create a DRF token for this user
+#     token, _ = Token.objects.get_or_create(user=user)
 
-    # build a redirect URL back to Next.js with the token
-    frontend_url = "http://localhost:3000/profile" # DEBUG REPLACE WITH ACTUAL URL
-    redirect_url = f"{frontend_url}?token={token.key}"
+#     # build a redirect URL back to Next.js with the token
+#     frontend_url = "http://localhost:3000/profile" # DEBUG REPLACE WITH ACTUAL URL
+#     redirect_url = f"{frontend_url}?token={token.key}"
 
-    # redirect the browser to Next.js with ?token=...
-    return redirect(redirect_url)
+#     # redirect the browser to Next.js with ?token=...
+#     return redirect(redirect_url)

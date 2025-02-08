@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django_cas_ng import views as cas_views
-from class_catch_app.views import cas_callback_view
+# from django_cas_ng import views as cas_views
+# from class_catch_app.views import cas_callback_view
 from django.shortcuts import redirect
 
 urlpatterns = [
@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('class_catch_app.urls')),
     # cas
-    path("cas/login/", cas_views.LoginView.as_view(), name="cas_login"),
-    path("cas/logout/", cas_views.LogoutView.as_view(), name="cas_logout"),
-    path("cas/callback/", cas_callback_view, name="cas_callback"),
+    # path("cas/login/", cas_views.LoginView.as_view(), name="cas_login"),
+    # path("cas/logout/", cas_views.LogoutView.as_view(), name="cas_logout"),
+    # path("cas/callback/", cas_callback_view, name="cas_callback"),
 ]

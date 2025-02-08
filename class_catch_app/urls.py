@@ -3,14 +3,15 @@ from rest_framework.routers import DefaultRouter
 from django.contrib import admin
 from rest_framework.authtoken.views import obtain_auth_token
 from .views import (
-    ClassViewSet, SubscriptionViewSet, UserSubscriptionsViewSet,
+    CourseViewSet, ClassViewSet, SubscriptionViewSet, UserSubscriptionsViewSet,
     EnrollmentHistoryViewSet, register, get_user
 )
 
 router = DefaultRouter()
-router.register(r'classes', ClassViewSet)
+# router.register(r'classes', ClassViewSet)
+router.register(r'courses', CourseViewSet, basename='course')
 router.register(r'subscriptions', SubscriptionViewSet)
-router.register(r'classes/(?P<class_id>\d+)/enrollment-history', EnrollmentHistoryViewSet, basename='enrollment-history')
+router.register(r'courses/(?P<class_id>\d+)/enrollment-history', EnrollmentHistoryViewSet, basename='enrollment-history')
 router.register(r'user/subscriptions', UserSubscriptionsViewSet, basename='user-subscriptions')
 
 urlpatterns = [

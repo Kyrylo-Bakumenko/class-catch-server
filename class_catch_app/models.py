@@ -4,6 +4,33 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+### NEW FROM API ###
+class Course(models.Model):
+    # Use the API’s composite id (e.g. "AAAS.023-201503") as the unique identifier
+    course_id = models.CharField(max_length=100, unique=True)
+    
+    subject_id = models.CharField(max_length=20)
+    course_number = models.CharField(max_length=20)
+    name = models.CharField(max_length=255)
+    
+    # Additional fields from the API response
+    is_active = models.BooleanField(default=True)
+    orc_title = models.CharField(max_length=255, blank=True, null=True)
+    orc_description = models.TextField(blank=True, null=True)
+    
+    # You can add fields for arrays/lists as JSON (if needed)
+    distributives = models.JSONField(blank=True, null=True)
+    culture_options = models.JSONField(blank=True, null=True)
+    schools = models.JSONField(blank=True, null=True)
+    
+    # Store when this record was last updated
+    last_updated = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.subject_id} {self.course_number}: {self.name}"
+
+
+### DEPRECATE FROM SCRAPER ###
 class Class(models.Model):
     class_code = models.CharField(max_length=10)
     course_number = models.CharField(max_length=10) # kept as a char field to avoid decimal problems (handled custom)

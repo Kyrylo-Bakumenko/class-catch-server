@@ -3,3 +3,5 @@
 logs/*
 staticfiles/*
 *.sql*
+class-catch/backend/__pycache__/*
+backend/__pycache__/*

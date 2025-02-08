@@ -18,6 +18,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
+
+### Dartmouth API Keys ###
+DART_API_KEY = os.getenv('DART_API_KEY')
+DART_API_BASE_URL = "https://api.dartmouth.edu/api"
+# Optionally, define scopes you might want to request.
+# For the Academic Courses API, no additional scopes are required (beyond login)
+DART_API_SCOPES = []
+
+# Django & Sendgrid
 SECRET_KEY = os.getenv('SECRET_KEY')
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
@@ -35,13 +44,13 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 # EMAIL_HOST_PASSWORD = 'your_email_password'
 
 ### CAS settings
-# The base URL for Dartmouth CAS
-CAS_SERVER_URL = os.getenv('CAS_SERVER_URL')
-CAS_VERSION = os.getenv('CAS_VERSION', '3')
+# # The base URL for Dartmouth CAS
+# CAS_SERVER_URL = os.getenv('CAS_SERVER_URL')
+# CAS_VERSION = os.getenv('CAS_VERSION', '3')
 
-# By default, django-cas-ng auto-creates a user if it doesn't exist
-CAS_AUTO_CREATE_USER = True
-CAS_AUTO_UPDATE_USER = True
+# # By default, django-cas-ng auto-creates a user if it doesn't exist
+# CAS_AUTO_CREATE_USER = True
+# CAS_AUTO_UPDATE_USER = True
 
 # where users go after CAS login or logout
 LOGIN_REDIRECT_URL = '/'
@@ -63,7 +72,6 @@ INSTALLED_APPS = [
     'class_catch_app',
     'django_filters',
     'rest_framework.authtoken',
-    'django_cas_ng',
 ]
 
 MIDDLEWARE = [
@@ -75,7 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_cas_ng.middleware.CASMiddleware',
+    # 'django_cas_ng.middleware.CASMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -120,16 +128,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'class_catch_db',
-#         'USER': 'class_catch_user',
-#         'PASSWORD': '23261428',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'class_catch_db',
+        'USER': 'class_catch_user',
+        'PASSWORD': '23261428',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -142,13 +150,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        conn_health_checks=True  # ← Add this
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get('DATABASE_URL'),
+#         conn_max_age=600,
+#         conn_health_checks=True  # ← Add this
+#     )
+# }
 
 
 # Password validation
@@ -171,7 +179,7 @@ AUTH_PASSWORD_VALIDATORS = [
     
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'django_cas_ng.backends.CASBackend',
+    # 'django_cas_ng.backends.CASBackend',
 )
 
 
