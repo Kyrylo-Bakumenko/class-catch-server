@@ -11,7 +11,7 @@ router = DefaultRouter()
 # router.register(r'classes', ClassViewSet)
 router.register(r'classes', CourseViewSet, basename='course')
 router.register(r'subscriptions', SubscriptionViewSet)
-router.register(r'courses/(?P<class_id>\d+)/enrollment-history', EnrollmentHistoryViewSet, basename='enrollment-history')
+router.register(r'classes/(?P<class_id>\d+)/enrollment-history', EnrollmentHistoryViewSet, basename='enrollment-history')
 router.register(r'user/subscriptions', UserSubscriptionsViewSet, basename='user-subscriptions')
 
 urlpatterns = [
